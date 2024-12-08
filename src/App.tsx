@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { CompanyDetailsForm } from './components/CompanyDetailsForm';
-import { UserDetailsForm } from './components/UserDetailsForm';
+// import { CompanyDetailsForm } from './components/CompanyDetailsForm';
+// import { UserDetailsForm } from './components/UserDetailsForm';
 import { PriceSettings } from './components/PriceSettings';
 import { RoomDetails } from './components/RoomDetails';
 import { generatePDF } from './utils/pdfGenerator';
 import { FileDown, PlusCircle } from 'lucide-react';
-import type { EstimationData, UserDetails, CompanyDetails, PriceSettings as PriceSettingsType, RoomDetails as RoomDetailsType } from './types';
+// import type { EstimationData, UserDetails, CompanyDetails, PriceSettings as PriceSettingsType, RoomDetails as RoomDetailsType } from './types';
+import type { EstimationData, PriceSettings as PriceSettingsType, RoomDetails as RoomDetailsType } from './types';
 
 function App() {
   const [data, setData] = useState<EstimationData>({
@@ -36,6 +37,8 @@ function App() {
       type: '',
       items: [],
     };
+    console.log(newRoom.id);
+    
     setData({ ...data, rooms: [...data.rooms, newRoom] });
   };
 
@@ -54,6 +57,8 @@ function App() {
   };
 
   const handleGeneratePDF = () => {
+    console.log(data);
+    
     const doc = generatePDF(data);
     doc.save('interior-cost-estimation.pdf');
   };
@@ -68,7 +73,7 @@ function App() {
             Generate PDF
           </button>
         </div>
-
+{/* 
         <CompanyDetailsForm
           companyDetails={data.companyDetails}
           onChange={(details: CompanyDetails) => setData({ ...data, companyDetails: details })}
@@ -77,7 +82,7 @@ function App() {
         <UserDetailsForm
           userDetails={data.userDetails}
           onChange={(details: UserDetails) => setData({ ...data, userDetails: details })}
-        />
+        /> */}
 
         <PriceSettings
           settings={data.priceSettings}
