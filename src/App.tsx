@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CompanyDetailsForm } from './components/CompanyDetailsForm';
 import { UserDetailsForm } from './components/UserDetailsForm';
 import { PriceSettings } from './components/PriceSettings';
@@ -7,7 +7,7 @@ import { generatePDF } from './utils/pdfGenerator';
 import { FileDown, PlusCircle } from 'lucide-react';
 import type { EstimationData, UserDetails, CompanyDetails, PriceSettings as PriceSettingsType, RoomDetails as RoomDetailsType } from './types';
 
-export default function App() {
+function App() {
   const [data, setData] = useState<EstimationData>({
     companyDetails: {
       name: '',
@@ -103,3 +103,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;

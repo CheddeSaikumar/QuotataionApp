@@ -1,4 +1,3 @@
-import React from 'react';
 import { RoomDetails as RoomDetailsType } from '../types';
 import { PlusCircle, Trash2 } from 'lucide-react';
 
@@ -75,7 +74,7 @@ export function RoomDetails({ room, onUpdate, onDelete, boxPrice, framePrice }: 
         <table className="min-w-full divide-y divide-neutral-gray">
           <thead>
             <tr>
-              <th className="px-4 py-2 text-left text-primary">Item Name</th>
+              {/* <th className="px-4 py-2 text-left text-primary">Item Name</th> */}
               <th className="px-4 py-2 text-left text-primary">Type</th>
               <th className="px-4 py-2 text-left text-primary">Length</th>
               <th className="px-4 py-2 text-left text-primary">Breadth</th>
@@ -87,14 +86,14 @@ export function RoomDetails({ room, onUpdate, onDelete, boxPrice, framePrice }: 
           <tbody className="divide-y divide-neutral-gray">
             {room.items.map((item) => (
               <tr key={item.id}>
-                <td className="px-4 py-2">
+                {/* <td className="px-4 py-2">
                   <input
                     type="text"
                     value={item.name}
                     onChange={(e) => updateItem(item.id, { name: e.target.value })}
                     className="input-field"
                   />
-                </td>
+                </td> */}
                 <td className="px-4 py-2">
                   <select
                     value={item.type}
@@ -122,7 +121,7 @@ export function RoomDetails({ room, onUpdate, onDelete, boxPrice, framePrice }: 
                   />
                 </td>
                 <td className="px-4 py-2">{item.totalLength.toFixed(2)}</td>
-                <td className="px-4 py-2">₹{item.totalPrice.toFixed(2)}</td>
+                <td className="px-4 py-2">{item.totalPrice.toFixed(2)}</td>
                 <td className="px-4 py-2">
                   <button
                     onClick={() => deleteItem(item.id)}

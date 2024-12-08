@@ -31,7 +31,7 @@ export function PriceSettings({ settings, onChange }: Props) {
       <h2 className="text-2xl font-semibold mb-6 text-primary">Price Settings</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="form-label">Box Price (per unit)</label>
+          <label className="form-label">Box Price (per SqFt)</label>
           <input
             type="number"
             name="boxPrice"
@@ -41,7 +41,7 @@ export function PriceSettings({ settings, onChange }: Props) {
           />
         </div>
         <div>
-          <label className="form-label">Frame Price (per unit)</label>
+          <label className="form-label">Frame Price (per SqFt)</label>
           <input
             type="number"
             name="framePrice"

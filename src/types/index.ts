@@ -19,18 +19,20 @@ export interface PriceSettings {
   workType: string;
 }
 
+export interface RoomItem {
+  id: string;
+  name: string;
+  type: 'box' | 'frame';
+  length: number;
+  breadth: number;
+  totalLength: number;
+  totalPrice: number;
+}
+
 export interface RoomDetails {
   id: string;
   type: string;
-  items: Array<{
-    id: string;
-    name: string;
-    type: 'box' | 'frame';
-    length: number;
-    breadth: number;
-    totalLength: number;
-    totalPrice: number;
-  }>;
+  items: RoomItem[];
 }
 
 export interface EstimationData {
