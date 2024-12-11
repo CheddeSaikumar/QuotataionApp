@@ -1,5 +1,6 @@
 import { RoomDetails as RoomDetailsType } from '../types';
-import { PlusCircle, Trash2 } from 'lucide-react';
+import { validateNumberInput } from '../utils/validation';
+import { Trash2, Plus } from 'lucide-react';
 
 interface Props {
   room: RoomDetailsType;
@@ -13,7 +14,6 @@ export function RoomDetails({ room, onUpdate, onDelete, boxPrice, framePrice }: 
   const addItem = () => {
     const newItem = {
       id: crypto.randomUUID(),
-      name: '',
       type: 'box' as const,
       length: 0,
       breadth: 0,
@@ -30,6 +30,15 @@ export function RoomDetails({ room, onUpdate, onDelete, boxPrice, framePrice }: 
     const updatedItems = room.items.map((item) => {
       if (item.id === itemId) {
         const updatedItem = { ...item, ...updates };
+        
+        // Ensure length and breadth are non-negative
+        if ('length' in updates) {
+          updatedItem.length = validateNumberInput(updates.length!.toString());
+        }
+        if ('breadth' in updates) {
+          updatedItem.breadth = validateNumberInput(updates.breadth!.toString());
+        }
+
         const totalLength = updatedItem.length * updatedItem.breadth;
         const price = updatedItem.type === 'box' ? boxPrice : framePrice;
         return {
@@ -74,6 +83,7 @@ export function RoomDetails({ room, onUpdate, onDelete, boxPrice, framePrice }: 
         <table className="min-w-full divide-y divide-neutral-gray">
           <thead>
             <tr>
+              <th className="px-4 py-2 text-left text-primary">#</th>
               <th className="px-4 py-2 text-left text-primary">Type</th>
               <th className="px-4 py-2 text-left text-primary">Length</th>
               <th className="px-4 py-2 text-left text-primary">Breadth</th>
@@ -83,8 +93,9 @@ export function RoomDetails({ room, onUpdate, onDelete, boxPrice, framePrice }: 
             </tr>
           </thead>
           <tbody className="divide-y divide-neutral-gray">
-            {room.items.map((item) => (
+            {room.items.map((item, index) => (
               <tr key={item.id}>
+                <td className="px-4 py-2">{index + 1}</td>
                 <td className="px-4 py-2">
                   <select
                     value={item.type}
@@ -100,7 +111,14 @@ export function RoomDetails({ room, onUpdate, onDelete, boxPrice, framePrice }: 
                     type="number"
                     value={item.length}
                     onChange={(e) => updateItem(item.id, { length: Number(e.target.value) })}
+                    min="0"
+                    step="0.01"
                     className="input-field"
+                    onKeyDown={(e) => {
+                      if (e.key === '-' || e.key === 'e') {
+                        e.preventDefault();
+                      }
+                    }}
                   />
                 </td>
                 <td className="px-4 py-2">
@@ -108,7 +126,14 @@ export function RoomDetails({ room, onUpdate, onDelete, boxPrice, framePrice }: 
                     type="number"
                     value={item.breadth}
                     onChange={(e) => updateItem(item.id, { breadth: Number(e.target.value) })}
+                    min="0"
+                    step="0.01"
                     className="input-field"
+                    onKeyDown={(e) => {
+                      if (e.key === '-' || e.key === 'e') {
+                        e.preventDefault();
+                      }
+                    }}
                   />
                 </td>
                 <td className="px-4 py-2">{item.totalLength.toFixed(2)}</td>
@@ -131,7 +156,7 @@ export function RoomDetails({ room, onUpdate, onDelete, boxPrice, framePrice }: 
         onClick={addItem}
         className="mt-4 flex items-center text-accent-blue hover:text-blue-700"
       >
-        <PlusCircle className="w-5 h-5 mr-2" />
+        <Plus className="w-5 h-5 mr-2" />
         Add Item
       </button>
     </div>

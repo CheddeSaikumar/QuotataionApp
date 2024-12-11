@@ -1,6 +1,6 @@
 export interface CompanyDetails {
   name: string;
-  mobile: string;
+  mobileNumbers: string[];
   email: string;
   location: string;
 }
@@ -19,9 +19,14 @@ export interface PriceSettings {
   workType: string;
 }
 
+export interface BasketItem {
+  name: string;
+  quantity: number;
+  price: number;
+}
+
 export interface RoomItem {
   id: string;
-  name: string;
   type: 'box' | 'frame';
   length: number;
   breadth: number;
@@ -40,4 +45,5 @@ export interface EstimationData {
   userDetails: UserDetails;
   priceSettings: PriceSettings;
   rooms: RoomDetails[];
+  basketItems: BasketItem[];
 }
