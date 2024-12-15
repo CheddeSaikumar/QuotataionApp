@@ -7,7 +7,6 @@ import {
   addUserDetails,
   addPriceSettings,
   addRoomDetails,
-  addBasketItems,
   addMaterialSpecifications,
   addGrandTotal,
   addFooter,
@@ -16,7 +15,7 @@ import {
 export function generatePDF(data: EstimationData) {
   const doc = new jsPDF();
   
-  let currentY = addHeader(doc, data);
+  let currentY = addHeader(doc);
 
   // Only add sections if they have content
   if (hasCompanyDetails(data.companyDetails)) {
@@ -36,13 +35,8 @@ export function generatePDF(data: EstimationData) {
     }
   });
 
-  // Add basket items if any exist
-  if (data.basketItems.length > 0) {
-    currentY = addBasketItems(doc, data.basketItems, currentY) + 20;
-  }
-
-  // Add grand total if there are any items
-  if (data.rooms.some(room => room.items.length > 0) || data.basketItems.length > 0) {
+  // Add grand total if there are any rooms with items
+  if (data.rooms.some(room => room.items.length > 0)) {
     currentY = addGrandTotal(doc, data, currentY) + 20;
   }
 
@@ -55,16 +49,14 @@ export function generatePDF(data: EstimationData) {
   const pageCount = doc.getNumberOfPages();
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i);
-    addFooter(doc, data.companyDetails.name);
+    addFooter(doc);
   }
 
   return doc;
 }
 
 function hasCompanyDetails(details: EstimationData['companyDetails']): boolean {
-  return Object.values(details).some(value => 
-    Array.isArray(value) ? value.some(v => v.trim() !== '') : value.trim() !== ''
-  );
+  return Object.values(details).some(value => value.trim() !== '');
 }
 
 function hasUserDetails(details: EstimationData['userDetails']): boolean {

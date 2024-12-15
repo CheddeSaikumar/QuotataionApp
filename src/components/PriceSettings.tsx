@@ -1,6 +1,5 @@
 import React from 'react';
 import { PriceSettings as PriceSettingsType } from '../types';
-import { validateNumberInput } from '../utils/validation';
 
 const WORK_TYPES = [
   'Home',
@@ -23,7 +22,7 @@ export function PriceSettings({ settings, onChange }: Props) {
     const { name, value } = e.target;
     onChange({
       ...settings,
-      [name]: name === 'workType' ? value : validateNumberInput(value),
+      [name]: name === 'workType' ? value : Number(value),
     });
   };
 
@@ -32,37 +31,23 @@ export function PriceSettings({ settings, onChange }: Props) {
       <h2 className="text-2xl font-semibold mb-6 text-primary">Price Settings</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="form-label">Box Price (per unit)</label>
+          <label className="form-label">Box Price (per SqFt)</label>
           <input
             type="number"
             name="boxPrice"
             value={settings.boxPrice}
             onChange={handleChange}
-            min="0"
-            step="0.01"
             className="input-field"
-            onKeyDown={(e) => {
-              if (e.key === '-' || e.key === 'e') {
-                e.preventDefault();
-              }
-            }}
           />
         </div>
         <div>
-          <label className="form-label">Frame Price (per unit)</label>
+          <label className="form-label">Frame Price (per SqFt)</label>
           <input
             type="number"
             name="framePrice"
             value={settings.framePrice}
             onChange={handleChange}
-            min="0"
-            step="0.01"
             className="input-field"
-            onKeyDown={(e) => {
-              if (e.key === '-' || e.key === 'e') {
-                e.preventDefault();
-              }
-            }}
           />
         </div>
         <div>
